@@ -1,5 +1,7 @@
 <template>
   <v-form>
+    <ingredient-image-component :imageUrl="recipe.image"/>
+
     <v-text-field
       filled
       label="Name"
@@ -19,7 +21,7 @@
     />
 
     <ingredient-list-component :ingredients="recipe.ingredients" :on-remove-ingredient="onRemoveIngredient" />
-
+    
     <v-alert :value="!recipeError.ingredients.succeeded" color="error" outlined>{{
       recipeError.ingredients.message
     }}</v-alert>
@@ -34,6 +36,10 @@
       @input="(value) => onUpdateRecipe('description', value)"
     ></v-textarea>
 
+    <v-alert :value="!recipeError.description.succeeded" color="error" outlined>{{
+      recipeError.description.message
+    }}</v-alert>
+
     <v-btn type="button" color="success" @click.prevent="onSave">Save</v-btn>
   </v-form>
 </template>
@@ -41,11 +47,12 @@
 <script lang="ts">
 import Vue from "vue";
 import IngredientListComponent from "./IngredientList.vue";
+import IngredientImageComponent from "./IngredientImage.vue"
 import { FormProps } from "../formProps";
 
 export default Vue.extend({
   name: "FormComponent",
-  components: { IngredientListComponent },
+  components: { IngredientListComponent, IngredientImageComponent }, 
   props: {
     recipe: { required: true },
     recipeError: { required: true },
