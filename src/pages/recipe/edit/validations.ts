@@ -1,11 +1,13 @@
 import { createFormValidation, Validators, ValidationSchema } from "@lemoncode/fonk";
+import { hasDescription } from "../../../common/validations/hasDescription";
 import { hasItems } from "../../../common/validations/hasItems";
+import { hasTitle } from "../../../common/validations/hasTitle";
 
 const validationSchema: ValidationSchema = {
   field: {
-    name: [Validators.required],
+    name: [hasTitle],
     ingredients: [hasItems],
-    description: [Validators.required],
+    description: [hasDescription],
   },
 };
 

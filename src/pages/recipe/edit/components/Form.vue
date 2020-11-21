@@ -6,11 +6,13 @@
       filled
       label="Name"
       :value="recipe.name"
-      :rules="[resultRecipeError]"
+      :rules="[resultNameRecipeError]"
       @input="(name) => onUpdateRecipe('name', name)"
       @click:append="onAddIngredient(ingredient)"
     />
-
+  <v-alert :value="!recipeError.name.succeeded" color="error" outlined>{{
+      recipeError.name.message
+    }}</v-alert>
     <v-text-field
       filled
       label="Ingredients"
@@ -31,6 +33,7 @@
       filled
       placeholder="Description...."
       rows="10"
+      :rules="[resultDescriptionRecipeError]"
       :value="recipe.description"
       :no-resize="true"
       @input="(value) => onUpdateRecipe('description', value)"
@@ -67,8 +70,11 @@ export default Vue.extend({
     };
   },
   computed: {
-    resultRecipeError(): boolean | string {
+    resultNameRecipeError(): boolean | string {
       return this.recipeError.name.succeeded || this.recipeError.name.message;
+    },
+     resultDescriptionRecipeError(): boolean | string {
+      return this.recipeError.description.succeeded || this.recipeError.description.message;
     },
   },
 });
