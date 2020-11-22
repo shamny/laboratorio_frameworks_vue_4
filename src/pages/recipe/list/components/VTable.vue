@@ -42,21 +42,7 @@ export default Vue.extend({
  methods: {
     routeEdit (item) {
         return `${baseRoutes.recipe}/${item.id}`;
-    //  this.editedIndex = this.desserts.indexOf(item)
-     // this.editedItem = Object.assign({}, item)
-     // this.dialog = true
     },
  },
 });
 </script>
-
-<style scoped>
-.table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.table tbody tr:nth-of-type(odd) {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-</style>
