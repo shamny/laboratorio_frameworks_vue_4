@@ -1,5 +1,8 @@
 <template>
+  <div>
   <login-page v-bind="{ login, updateLogin, loginRequest, loginError }" />
+  <error-snack-bar v-bind="{ dataSnackBar , closeSnackBar, openSnackBar}"/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -10,14 +13,18 @@ import LoginPage from "./Page.vue";
 import { createEmptyLogin, Login, createEmptyLoginError } from "./viewModel";
 import { mapLoginVMToModel } from "./mapper";
 import { validation } from "./validations";
+import { ErrorSnackBar } from "../../common/snackbars";
 
 export default Vue.extend({
   name: "PageLoginContainer",
-  components: { LoginPage },
+  components: { LoginPage,ErrorSnackBar },
   data() {
     return {
       login: createEmptyLogin(),
-      loginError: createEmptyLoginError()
+      loginError: createEmptyLoginError(),
+      dataSnackBar:{ 
+        errorText: "",
+        isVisible:false},
     };
   },
   methods: {
@@ -43,10 +50,11 @@ export default Vue.extend({
             .then(() => {
               this.$router.push(baseRoutes.recipe);
             })
-            .catch(error =>
-              alert(
-                `Este mensaje debes implementarlo con el componente Snackbar de Vuetify ;) => ${error}`
-              )
+            .catch(error =>{
+              this.openSnackBar(error);
+          //    this.dataSnackBar.errorText = error;
+          //    this.dataSnackBar.isVisible = true;
+            }
             );
 
 
@@ -57,6 +65,14 @@ export default Vue.extend({
           };
         }
       });
+    },
+    closeSnackBar(){
+      this.dataSnackBar.isVisible=false;
+      this.dataSnackBar.errorText ="";
+    },
+    openSnackBar(error:string){
+      this.dataSnackBar.isVisible=true;
+      this.dataSnackBar.errorText = error;
     }
   }
 });

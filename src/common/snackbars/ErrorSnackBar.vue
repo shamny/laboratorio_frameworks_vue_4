@@ -1,35 +1,26 @@
 <template>
   <div >
     <v-snackbar
-      v-model="snackbar"
-      :timeout="timeout"
+      color="red darken-2"
+      v-model="dataSnackBar.isVisible"
+      @blur="() => closeSnackBar()"
     >
-      {{ text }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="blue"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
-          Close
-        </v-btn>
-      </template>
+      {{ dataSnackBar.errorText }}
+    <v-btn color="blue" text  @click="() => closeSnackBar()" > Close </v-btn>
     </v-snackbar>
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue,{ PropOptions }  from "vue";
 import Vuetify from 'vuetify';
 
 export default Vue.extend({
   name: "ErrorSnackBar",
-  data: () => ({
-    snackbar: false,
-    text: 'My timeout is set to 2000.',
-    timeout: 2000,
-  }),
-  });
+  props: {
+    dataSnackBar: { required: true } as PropOptions<{string, boolean}>,
+    closeSnackBar:{required:true} as PropOptions<() => void>,
+    openSnackBar:{required:true} as PropOptions<() => void>,
+  },
+ });
 </script>

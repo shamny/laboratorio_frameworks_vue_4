@@ -10,24 +10,19 @@
       @input="(name) => onUpdateRecipe('name', name)"
       @click:append="onAddIngredient(ingredient)"
     />
-  <v-alert :value="!recipeError.name.succeeded" color="error" outlined>{{
-      recipeError.name.message
-    }}</v-alert>
+ 
     <v-text-field
       filled
       label="Ingredients"
       placeholder="Add ingredient"
       append-icon="add"
       v-model="ingredient"
+      :rules="[resultIngredientsRecipeError]"
       @click:append="onAddIngredient(ingredient)"
     />
 
     <ingredient-list-component :ingredients="recipe.ingredients" :on-remove-ingredient="onRemoveIngredient" />
     
-    <v-alert :value="!recipeError.ingredients.succeeded" color="error" outlined>{{
-      recipeError.ingredients.message
-    }}</v-alert>
-
     <v-textarea
       label="Description"
       filled
@@ -38,12 +33,7 @@
       :no-resize="true"
       @input="(value) => onUpdateRecipe('description', value)"
     ></v-textarea>
-
-    <v-alert :value="!recipeError.description.succeeded" color="error" outlined>{{
-      recipeError.description.message
-    }}</v-alert>
-
-    <v-btn type="button" color="success" @click.prevent="onSave">Save</v-btn>
+      <v-btn type="button" color="success" @click.prevent="onSave">Save</v-btn>
   </v-form>
 </template>
 
@@ -76,6 +66,9 @@ export default Vue.extend({
      resultDescriptionRecipeError(): boolean | string {
       return this.recipeError.description.succeeded || this.recipeError.description.message;
     },
+     resultIngredientsRecipeError(): boolean | string {
+      return this.recipeError.ingredients.succeeded || this.recipeError.ingredients.message;
+    },
   },
-});
+ });
 </script>

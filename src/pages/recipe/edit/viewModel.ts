@@ -20,10 +20,12 @@ export interface RecipeError {
   name: ValidationResult;
   ingredients: ValidationResult;
   description:ValidationResult;
+  nameIngredient:ValidationResult;
 }
 
 export const createEmptyRecipeError = (): RecipeError => ({
   name: createDefaultValidationResult(),
   ingredients: createDefaultValidationResult(),
   description: createDefaultValidationResult(),
+  nameIngredient: createDefaultValidationResult(),
 });
